@@ -5,11 +5,12 @@ sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config
 rpm -qa |grep  openssh
 for i in $(rpm -qa |grep openssh);do rpm -e $i --nodeps;done
 #安装依赖关系
-yum install -y gcc pam-devel rpm-build wget 
+yum install -y pam-devel rpm-build
+yum install -y perl-core libtemplate-perl zlib-devel gcc wget
 # 安装 openssh
-wget https://openbsd.hk/pub/OpenBSD/OpenSSH/portable/openssh-8.1p1.tar.gz
-tar -xvf openssh-8.1p1.tar.gz
-cd openssh-8.1p1
+wget https://openbsd.hk/pub/OpenBSD/OpenSSH/portable/openssh-8.2p1.tar.gz
+tar -xvf openssh-8.2p1.tar.gz
+cd openssh-8.2p1
 ./configure --prefix=/usr --sysconfdir=/etc/ssh --with-md5-passwords --with-pam --with-ssl-dir=/usr/local/ssl --without-hardening --with-zlib --with-tcp-wrappers
 mv /etc/ssh /etc/ssh.old
 cp contrib/redhat/sshd.pam /etc/pam.d/sshd
