@@ -35,7 +35,7 @@ openssl version
 输出版本号为“OpenSSL 1.1.1d  10 Sep 2019”，说明更新成功
 
 
-## 升级openssh版本到8.1p1
+## 升级openssh版本到OpenSSH_8.2p1
 
 ```
 bash <(curl -L -s https://raw.githubusercontent.com/2444989513/wsopenssl/master/openssh.sh) | tee openssh_ins.log
