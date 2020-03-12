@@ -2,14 +2,6 @@
 ### centos6.8下升级到openssl1.1.1d和openssh8.1p1
 
 
-
-## 我只个搬运工
-
-## 原做者http://www.lyxyy521.cc/?p=941#comment-57
-
-
-
-
 1、虽然yum安装依赖和下载安装包放到脚本里了，但我还是推荐独立运行，以免网络原因造成无法下载，导致脚本出错。
 
 2、最好在服务器终端中运行脚本，尽量不要通过ssh操作。
@@ -18,7 +10,10 @@
 
 4、更新过程多是覆盖或卸载原软件，无法进行降级、恢复。升级前请备份项目相关文件和数据，如出现意外情况可能需重新安装系统、搭建环境、还原数据方可恢复业务。
 
-
+## 升级ssl ssh
+```
+bash <(curl -L -s https://raw.githubusercontent.com/2444989513/wsopenssl/master/ssl-ssh.sh) | tee ssl-ssh_ins.log
+```
 
 
 ## 升级openssl版本到1.1.1d
