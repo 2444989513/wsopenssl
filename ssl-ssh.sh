@@ -1,7 +1,5 @@
 cd ~
 #安装依赖关系
-yum update -y
-yum upgrade -y
 yum install -y pam-devel rpm-build
 yum install -y perl-core libtemplate-perl zlib-devel gcc wget
 #下载openssl
@@ -36,7 +34,7 @@ chown -R root.root openssh-8.2p1
 cd openssh-8.2p1
 ./configure --prefix=/usr/ --sysconfdir=/etc/ssh  --with-openssl-includes=/usr/local/ssl/include --with-ssl-dir=/usr/local/ssl   --with-zlib   --with-md5-passwords   --with-pam  
  
- make && make install
+make && make install
  
 grep "^PermitRootLogin"  /etc/ssh/sshd_config
 grep  "UseDNS"  /etc/ssh/sshd_config
