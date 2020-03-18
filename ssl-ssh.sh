@@ -41,7 +41,9 @@ cp -a contrib/redhat/sshd.pam /etc/pam.d/sshd.pam
 
 chmod +x /etc/init.d/sshd
 
-sed -i "32a PermitRootLogin yes" /etc/ssh/sshd_config
+#sed -i "32a PermitRootLogin yes" /etc/ssh/sshd_config
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+echo "PasswordAuthentication yes"  >> /etc/ssh/sshd_config
 
 chkconfig --add sshd
 systemctl enable sshd
