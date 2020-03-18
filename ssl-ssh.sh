@@ -4,9 +4,8 @@ yum install -y pam-devel rpm-build
 yum install -y perl-core libtemplate-perl zlib-devel gcc wget
 #下载openssl
 wget https://www.openssl.org/source/openssl-1.1.1e.tar.gz
-#老版本的openssl放到另外一个目录
-mkdir /root/openssl.bak
-mv /usr/bin/openssl /root/openssl.bak
+#老版本的openssl
+rm -rf /usr/bin/openssl/*
 #解压	
 tar zxvf openssl-1.1.1e.tar.gz
 #进入文件夹
