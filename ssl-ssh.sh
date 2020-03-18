@@ -48,7 +48,7 @@ echo "PasswordAuthentication yes"  >> /etc/ssh/sshd_config
 chkconfig --add sshd
 systemctl enable sshd
 chkconfig sshd on
-
+systemctl enable sshd
 cd ~
 rm -rf openssh-8.2p1.tar.gz
 rm -rf openssh-8.2p1
