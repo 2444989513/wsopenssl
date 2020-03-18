@@ -36,8 +36,7 @@ cd openssh-8.2p1
  
 make && make install
  
-grep "^PermitRootLogin"  /etc/ssh/sshd_config
-grep  "UseDNS"  /etc/ssh/sshd_config
+sed -i "32a PermitRootLogin yes" /etc/ssh/sshd_config
 
 cp -a contrib/redhat/sshd.init /etc/init.d/sshd
 cp -a contrib/redhat/sshd.pam /etc/pam.d/sshd.pam
