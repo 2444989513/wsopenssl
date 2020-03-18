@@ -5,14 +5,14 @@ yum upgrade -y
 yum install -y pam-devel rpm-build
 yum install -y perl-core libtemplate-perl zlib-devel gcc wget
 #下载openssl
-wget https://www.openssl.org/source/openssl-1.1.1d.tar.gz
+wget https://www.openssl.org/source/openssl-1.1.1e.tar.gz
 #老版本的openssl放到另外一个目录
 mkdir /root/openssl.bak
 mv /usr/bin/openssl /root/openssl.bak
 #解压	
-tar zxvf openssl-1.1.1d.tar.gz
+tar zxvf openssl-1.1.1e.tar.gz
 #进入文件夹
-cd openssl-1.1.1d
+cd openssl-1.1.1e
 ./config --prefix=/usr/local/ssl
 make&&make install
 #处理库文件
@@ -26,24 +26,29 @@ openssl version
 
 
 cd ~
-#老版本的ssh放到另外一个目录
-mkdir /root/ssh.bak
-mv  /etc/ssh/* /root/ssh.bak/
-# 安装 openssh
+
+rm -rf /etc/ssh/*
 rm -rf /usr/lib/systemd/system/sshd.service
+# 安装 openssh
 wget https://openbsd.hk/pub/OpenBSD/OpenSSH/portable/openssh-8.2p1.tar.gz
 tar -xvf openssh-8.2p1.tar.gz
+chown -R root.root openssh-8.2p1
 cd openssh-8.2p1
-./configure --prefix=/usr --sysconfdir=/etc/ssh --with-md5-passwords --with-pam --with-ssl-dir=/usr/local/ssl --without-hardening --with-zlib --with-tcp-wrappers
-mv /etc/ssh /etc/ssh.old
-cp contrib/redhat/sshd.pam /etc/pam.d/sshd
-make && make install
-#复制启动脚本到/etc/init.d
-cp contrib/redhat/sshd.init /etc/init.d/sshd
+./configure --prefix=/usr/ --sysconfdir=/etc/ssh  --with-openssl-includes=/usr/local/ssl/include --with-ssl-dir=/usr/local/ssl   --with-zlib   --with-md5-passwords   --with-pam  
+ 
+ make && make install
+ 
+grep "^PermitRootLogin"  /etc/ssh/sshd_config
+grep  "UseDNS"  /etc/ssh/sshd_config
+
+cp -a contrib/redhat/sshd.init /etc/init.d/sshd
+cp -a contrib/redhat/sshd.pam /etc/pam.d/sshd.pam
+
+chmod +x /etc/init.d/sshd
 chkconfig --add sshd
+systemctl enable sshd
 chkconfig sshd on
-chkconfig --list|grep sshd
-sed -i "32a PermitRootLogin yes" /etc/ssh/sshd_config
+
 #终端运行脚本可以重启ssh服务生效，如果是通过ssh连接进行操作的，需要重启服务器，脚本最后一条命令替换为：reboot
 service sshd restart
 #reboot
@@ -51,8 +56,8 @@ service sshd restart
 cd ~
 rm -rf openssh-8.2p1.tar.gz
 rm -rf openssh-8.2p1
-rm -rf openssl-1.1.1d.tar.gz
-rm -rf openssl-1.1.1d
+rm -rf openssl-1.1.1e.tar.gz
+rm -rf openssl-1.1.1e
 
 #检查版本
 openssl version
