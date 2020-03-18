@@ -11,7 +11,7 @@ tar zxvf openssl-1.1.1e.tar.gz
 #进入文件夹
 cd openssl-1.1.1e
 ./config --prefix=/usr/local/ssl
-make&&make install
+make && make install
 #处理库文件
 echo "/usr/local/ssl/lib">>/etc/ld.so.conf
 ldconfig -v
