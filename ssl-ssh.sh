@@ -35,20 +35,18 @@ cd openssh-8.2p1
 ./configure --prefix=/usr/ --sysconfdir=/etc/ssh  --with-openssl-includes=/usr/local/ssl/include --with-ssl-dir=/usr/local/ssl   --with-zlib   --with-md5-passwords   --with-pam  
  
 make && make install
- 
-sed -i "32a PermitRootLogin yes" /etc/ssh/sshd_config
+
 
 cp -a contrib/redhat/sshd.init /etc/init.d/sshd
 cp -a contrib/redhat/sshd.pam /etc/pam.d/sshd.pam
 
 chmod +x /etc/init.d/sshd
+
+sed -i "32a PermitRootLogin yes" /etc/ssh/sshd_config
+
 chkconfig --add sshd
 systemctl enable sshd
 chkconfig sshd on
-
-#终端运行脚本可以重启ssh服务生效，如果是通过ssh连接进行操作的，需要重启服务器，脚本最后一条命令替换为：reboot
-service sshd restart
-#reboot
 
 cd ~
 rm -rf openssh-8.2p1.tar.gz
@@ -60,4 +58,9 @@ rm -rf openssl-1.1.1e
 openssl version
 
 ssh -V
+
+#终端运行脚本可以重启ssh服务生效，如果是通过ssh连接进行操作的，需要重启服务器，脚本最后一条命令替换为：reboot
+service sshd restart
+#reboot
+
 
