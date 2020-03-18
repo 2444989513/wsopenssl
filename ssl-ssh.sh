@@ -24,31 +24,30 @@ openssl version
 
 cd ~
 
-rm -rf /etc/ssh/*
-rm -rf /usr/lib/systemd/system/sshd.service
+# 关闭Selinux
+setenforce 0
+sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config
+# 卸载 openssh
+rpm -qa |grep  openssh
+for i in $(rpm -qa |grep openssh);do rpm -e $i --nodeps;done
 # 安装 openssh
 wget https://openbsd.hk/pub/OpenBSD/OpenSSH/portable/openssh-8.2p1.tar.gz
 tar -xvf openssh-8.2p1.tar.gz
 chown -R root.root openssh-8.2p1
 cd openssh-8.2p1
-./configure --prefix=/usr/ --sysconfdir=/etc/ssh  --with-openssl-includes=/usr/local/ssl/include --with-ssl-dir=/usr/local/ssl   --with-zlib   --with-md5-passwords   --with-pam  
- 
+./configure --prefix=/usr --sysconfdir=/etc/ssh --with-md5-passwords --with-pam --with-ssl-dir=/usr/local/ssl --without-hardening --with-zlib --with-tcp-wrappers
+mv /etc/ssh /etc/ssh.old
+cp contrib/redhat/sshd.pam /etc/pam.d/sshd
 make && make install
-
-
-cp -a contrib/redhat/sshd.init /etc/init.d/sshd
-cp -a contrib/redhat/sshd.pam /etc/pam.d/sshd.pam
-
-chmod +x /etc/init.d/sshd
-
+#复制启动脚本到/etc/init.d
+cp contrib/redhat/sshd.init /etc/init.d/sshd
+chkconfig --add sshd
+chkconfig sshd on
+chkconfig --list|grep sshd
 #sed -i "32a PermitRootLogin yes" /etc/ssh/sshd_config
 echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 echo "PasswordAuthentication yes"  >> /etc/ssh/sshd_config
 
-chkconfig --add sshd
-systemctl enable sshd
-chkconfig sshd on
-systemctl enable sshd
 cd ~
 rm -rf openssh-8.2p1.tar.gz
 rm -rf openssh-8.2p1
