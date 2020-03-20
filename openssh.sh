@@ -21,6 +21,11 @@ chkconfig --add sshd
 chkconfig sshd on
 chkconfig --list|grep sshd
 sed -i "32a PermitRootLogin yes" /etc/ssh/sshd_config
+
+cd ~
+rm -rf openssh-8.2p1.tar.gz
+rm -rf openssh-8.2p1
+
 #终端运行脚本可以重启ssh服务生效，如果是通过ssh连接进行操作的，需要重启服务器，脚本最后一条命令替换为：reboot
 #service sshd restart
 reboot
