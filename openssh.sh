@@ -8,6 +8,7 @@ for i in $(rpm -qa |grep openssh);do rpm -e $i --nodeps;done
 yum install -y pam-devel rpm-build
 yum install -y perl-core libtemplate-perl zlib-devel gcc wget
 # 安装 openssh
+cd ~
 wget https://openbsd.hk/pub/OpenBSD/OpenSSH/portable/openssh-8.2p1.tar.gz
 tar -xvf openssh-8.2p1.tar.gz
 cd openssh-8.2p1
