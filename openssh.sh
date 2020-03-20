@@ -11,6 +11,7 @@ yum install -y perl-core libtemplate-perl zlib-devel gcc wget
 cd ~
 wget https://openbsd.hk/pub/OpenBSD/OpenSSH/portable/openssh-8.2p1.tar.gz
 tar -xvf openssh-8.2p1.tar.gz
+chown -R root.root openssh-8.2p1
 cd openssh-8.2p1
 ./configure --prefix=/usr --sysconfdir=/etc/ssh --with-md5-passwords --with-pam --with-ssl-dir=/usr/local/ssl --without-hardening --with-zlib --with-tcp-wrappers
 mv /etc/ssh /etc/ssh.old
