@@ -1,3 +1,4 @@
+cd ~
 #安装依赖,同时上传软件包到服务器。
 yum -y install perl-core libtemplate-perl zlib-devel gcc wget
 #下载openssl
@@ -16,6 +17,11 @@ ldconfig -v
 #处理命令文件
 ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl
 ln -s /usr/local/ssl/include/openssl /usr/include/openssl
+
+cd ~
+rm -rf openssl-1.1.1e.tar.gz
+rm -rf openssl-1.1.1e
+
 #检查版本
 openssl version
 
