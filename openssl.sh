@@ -1,6 +1,10 @@
 cd ~
 #安装依赖,同时上传软件包到服务器
 yum -y install perl-core libtemplate-perl zlib-devel gcc wget
+
+sudo yum install centos-release-scl -y
+sudo yum install devtoolset-9
+sudo scl enable devtoolset-9 bash
 #下载openssl
 wget https://www.openssl.org/source/openssl-1.1.1f.tar.gz
 #备份原openssl
