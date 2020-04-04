@@ -9,7 +9,7 @@ yum install -y pam-devel rpm-build
 yum install -y perl-core libtemplate-perl zlib-devel gcc wget
 
 sudo yum install centos-release-scl -y
-sudo yum install devtoolset-9
+sudo yum install devtoolset-9 -y
 sudo scl enable devtoolset-9 bash
 
 # 安装 openssh
